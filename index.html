@@ -6,340 +6,586 @@
     <title>Directorio Empresarial - Cámara de Comercio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* ===== VARIABLES ===== */
+        :root {
+            --bg-primary: #f0f2f5;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --text-light: #999999;
+            --border-color: #e8e8e8;
+            --shadow: 0 2px 10px rgba(0,0,0,0.05);
+            --shadow-hover: 0 8px 30px rgba(0,0,0,0.1);
+            --header-gradient: linear-gradient(135deg, #1a237e 0%, #0d47a1 50%, #1565c0 100%);
+            --rubro-bg: #e3f2fd;
+            --rubro-text: #1565c0;
+            --promo-bg: #fff3e0;
+            --promo-text: #e65100;
+            --desc-bg: #f8f9fa;
+            --search-bg: rgba(255,255,255,0.15);
+            --search-border: rgba(255,255,255,0.2);
+            --input-text: #ffffff;
+            --select-bg: #ffffff;
+        }
+
+        /* ===== MODO OSCURO ===== */
+        [data-theme="dark"] {
+            --bg-primary: #1a1a2e;
+            --bg-secondary: #16213e;
+            --bg-card: #1e2a4a;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --text-light: #888888;
+            --border-color: #2a3a5a;
+            --shadow: 0 2px 10px rgba(0,0,0,0.3);
+            --shadow-hover: 0 8px 30px rgba(0,0,0,0.5);
+            --header-gradient: linear-gradient(135deg, #0d1b2a 0%, #1b2838 50%, #1a3a5c 100%);
+            --rubro-bg: #1a3a5c;
+            --rubro-text: #64b5f6;
+            --promo-bg: #2a1a0a;
+            --promo-text: #ffb74d;
+            --desc-bg: #0d1b2a;
+            --search-bg: rgba(255,255,255,0.08);
+            --search-border: rgba(255,255,255,0.1);
+            --input-text: #e0e0e0;
+            --select-bg: #1e2a4a;
+        }
+
+        /* ===== RESET ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f0f2f5;
-            color: #333;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
         }
+
+        /* ===== HEADER ===== */
         .header {
-            background: linear-gradient(135deg, #1a237e 0%, #0d47a1 50%, #1565c0 100%);
+            background: var(--header-gradient);
             color: white;
-            padding: 20px 0;
+            padding: 16px 0;
             position: sticky;
             top: 0;
             z-index: 1000;
             box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            transition: background 0.3s ease;
         }
+
         .header-content {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 16px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
         }
+
         .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
         }
+
         .header h1 {
-            font-size: 1.5em;
+            font-size: 1.3em;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
+
         .header h1 i {
-            font-size: 1.8em;
+            font-size: 1.6em;
         }
+
         .header h1 small {
-            font-size: 0.5em;
+            font-size: 0.45em;
             font-weight: 300;
             opacity: 0.8;
             display: block;
         }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
         .header-stats {
             display: flex;
-            gap: 20px;
-            font-size: 0.9em;
+            gap: 12px;
+            font-size: 0.8em;
             background: rgba(255,255,255,0.1);
-            padding: 8px 15px;
-            border-radius: 25px;
+            padding: 6px 14px;
+            border-radius: 20px;
         }
+
         .header-stats span {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
         }
+
+        .theme-toggle {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255,255,255,0.25);
+            transform: scale(1.05);
+        }
+
+        /* ===== BUSCADOR ===== */
         .search-box {
             display: flex;
             align-items: center;
-            background: rgba(255,255,255,0.15);
+            background: var(--search-bg);
             border-radius: 50px;
-            padding: 8px 20px;
-            border: 1px solid rgba(255,255,255,0.2);
+            padding: 6px 16px;
+            border: 1px solid var(--search-border);
             transition: all 0.3s ease;
         }
+
         .search-box:focus-within {
-            background: rgba(255,255,255,0.25);
-            border-color: rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.4);
         }
+
         .search-box i {
             color: rgba(255,255,255,0.7);
             margin-right: 10px;
         }
+
         .search-box input {
             border: none;
-            padding: 10px 0;
+            padding: 8px 0;
             width: 100%;
-            font-size: 1em;
+            font-size: 0.95em;
             outline: none;
             background: transparent;
-            color: white;
+            color: var(--input-text);
         }
+
         .search-box input::placeholder {
-            color: rgba(255,255,255,0.6);
+            color: rgba(255,255,255,0.5);
         }
+
+        #clearSearch {
+            opacity: 0;
+            transition: opacity 0.3s;
+            cursor: pointer;
+            color: rgba(255,255,255,0.5);
+        }
+
+        #clearSearch.visible {
+            opacity: 1;
+        }
+
+        /* ===== CONTENEDOR ===== */
         .container {
             max-width: 1200px;
-            margin: 20px auto;
-            padding: 0 20px;
+            margin: 16px auto;
+            padding: 0 12px;
         }
+
+        /* ===== RUBROS (SELECT) ===== */
         .rubros-section {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 16px 18px;
+            box-shadow: var(--shadow);
+            margin-bottom: 16px;
+            transition: background 0.3s ease;
         }
+
         .rubros-section h2 {
-            font-size: 1.1em;
-            color: #666;
-            margin-bottom: 15px;
+            font-size: 1em;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-        .rubros-grid {
-            display: flex;
-            flex-wrap: wrap;
             gap: 8px;
         }
-        .rubro-btn {
-            padding: 8px 18px;
-            border: 2px solid #e0e0e0;
-            background: white;
-            color: #555;
-            border-radius: 25px;
+
+        .rubros-section h2 i {
+            color: #1565c0;
+        }
+
+        [data-theme="dark"] .rubros-section h2 i {
+            color: #64b5f6;
+        }
+
+        .rubro-select-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .rubro-select-wrapper select {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 0.95em;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            background: var(--select-bg);
+            color: var(--text-primary);
+            appearance: none;
             cursor: pointer;
-            font-size: 0.85em;
             transition: all 0.3s ease;
             font-weight: 500;
-            white-space: nowrap;
         }
-        .rubro-btn:hover {
+
+        .rubro-select-wrapper select:hover {
             border-color: #1565c0;
-            color: #1565c0;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(21,101,192,0.15);
         }
-        .rubro-btn.active {
-            background: #1565c0;
+
+        .rubro-select-wrapper select:focus {
+            outline: none;
             border-color: #1565c0;
-            color: white;
+            box-shadow: 0 0 0 3px rgba(21,101,192,0.15);
         }
-        .rubro-btn .count {
-            background: rgba(0,0,0,0.1);
-            padding: 0 8px;
-            border-radius: 12px;
-            font-size: 0.8em;
-            margin-left: 5px;
+
+        [data-theme="dark"] .rubro-select-wrapper select:hover {
+            border-color: #64b5f6;
         }
-        .rubro-btn.active .count {
-            background: rgba(255,255,255,0.2);
+
+        [data-theme="dark"] .rubro-select-wrapper select:focus {
+            border-color: #64b5f6;
+            box-shadow: 0 0 0 3px rgba(100,181,246,0.2);
         }
+
+        .rubro-select-wrapper::after {
+            content: "\f0d7";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            pointer-events: none;
+        }
+
+        /* ===== EMPRESAS ===== */
         .empresas-section {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            min-height: 400px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 16px 18px;
+            box-shadow: var(--shadow);
+            min-height: 350px;
+            transition: background 0.3s ease;
         }
+
         .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
         }
+
         .section-header h2 {
-            font-size: 1.2em;
-            color: #333;
+            font-size: 1.1em;
+            color: var(--text-primary);
         }
+
         .section-header .result-count {
-            font-size: 0.9em;
-            color: #888;
+            font-size: 0.85em;
+            color: var(--text-light);
         }
+
+        /* ===== EMPTY STATE ===== */
         .empty-state {
             text-align: center;
-            padding: 60px 20px;
-            color: #999;
+            padding: 50px 16px;
+            color: var(--text-light);
         }
+
         .empty-state i {
-            font-size: 4em;
-            margin-bottom: 20px;
-            color: #ddd;
+            font-size: 3.5em;
+            margin-bottom: 16px;
+            color: var(--border-color);
         }
+
         .empty-state h3 {
-            color: #666;
-            margin-bottom: 10px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
         }
+
+        /* ===== TARJETAS ===== */
         .empresas-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 20px;
+            grid-template-columns: 1fr;
+            gap: 16px;
         }
+
         .empresa-card {
-            background: white;
-            border: 1px solid #e8e8e8;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 20px;
+            padding: 16px;
             transition: all 0.3s ease;
-            position: relative;
+            animation: fadeInUp 0.3s ease forwards;
         }
+
         .empresa-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
             border-color: #1565c0;
         }
+
+        [data-theme="dark"] .empresa-card:hover {
+            border-color: #64b5f6;
+        }
+
         .empresa-card .ruc-tag {
             display: inline-block;
-            background: #f0f2f5;
+            background: var(--bg-primary);
             padding: 2px 10px;
             border-radius: 12px;
-            font-size: 0.75em;
-            color: #666;
-            margin-bottom: 8px;
+            font-size: 0.7em;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
             font-family: monospace;
         }
+
         .empresa-card h3 {
             color: #1a237e;
-            font-size: 1.1em;
-            margin-bottom: 10px;
+            font-size: 1.05em;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
+
+        [data-theme="dark"] .empresa-card h3 {
+            color: #64b5f6;
+        }
+
         .empresa-card h3 i {
             color: #1565c0;
-            font-size: 0.9em;
+            font-size: 0.85em;
         }
+
+        [data-theme="dark"] .empresa-card h3 i {
+            color: #64b5f6;
+        }
+
         .empresa-card .rubro-tag {
             display: inline-block;
-            background: #e3f2fd;
-            color: #1565c0;
+            background: var(--rubro-bg);
+            color: var(--rubro-text);
             padding: 2px 12px;
             border-radius: 12px;
-            font-size: 0.75em;
+            font-size: 0.7em;
             font-weight: 600;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
+
         .empresa-card .info-item {
             display: flex;
             align-items: flex-start;
-            margin: 6px 0;
-            font-size: 0.9em;
-            color: #555;
+            margin: 4px 0;
+            font-size: 0.85em;
+            color: var(--text-secondary);
             gap: 10px;
         }
+
         .empresa-card .info-item i {
-            width: 18px;
+            width: 16px;
             color: #1565c0;
             margin-top: 2px;
             flex-shrink: 0;
+            font-size: 0.9em;
         }
+
+        [data-theme="dark"] .empresa-card .info-item i {
+            color: #64b5f6;
+        }
+
         .empresa-card .info-item .value {
             word-break: break-word;
         }
+
         .empresa-card .info-item .value a {
             color: #1565c0;
             text-decoration: none;
         }
+
+        [data-theme="dark"] .empresa-card .info-item .value a {
+            color: #64b5f6;
+        }
+
         .empresa-card .info-item .value a:hover {
             text-decoration: underline;
         }
+
         .empresa-card .descripcion {
-            margin: 12px 0;
-            padding: 12px;
-            background: #f8f9fa;
+            margin: 10px 0;
+            padding: 10px 12px;
+            background: var(--desc-bg);
             border-radius: 8px;
-            font-size: 0.9em;
-            color: #555;
+            font-size: 0.85em;
+            color: var(--text-secondary);
             line-height: 1.5;
             border-left: 3px solid #1565c0;
         }
+
+        [data-theme="dark"] .empresa-card .descripcion {
+            border-left-color: #64b5f6;
+        }
+
         .empresa-card .promocion {
-            margin-top: 10px;
-            padding: 10px 12px;
-            background: #fff3e0;
+            margin-top: 8px;
+            padding: 8px 12px;
+            background: var(--promo-bg);
             border-radius: 8px;
-            font-size: 0.85em;
-            color: #e65100;
+            font-size: 0.82em;
+            color: var(--promo-text);
             border-left: 3px solid #ff9800;
         }
+
         .empresa-card .promocion i {
-            margin-right: 8px;
+            margin-right: 6px;
         }
-        .rubros-wrapper {
-            overflow-x: auto;
-            padding: 5px 0;
-            -webkit-overflow-scrolling: touch;
+
+        /* ===== LOADING ===== */
+        .loading {
+            text-align: center;
+            padding: 50px 16px;
         }
-        .rubros-wrapper::-webkit-scrollbar {
-            height: 4px;
+
+        .loading i {
+            font-size: 2.5em;
+            color: #1565c0;
+            animation: spin 1s linear infinite;
         }
-        .rubros-wrapper::-webkit-scrollbar-thumb {
-            background: #1565c0;
-            border-radius: 4px;
+
+        [data-theme="dark"] .loading i {
+            color: #64b5f6;
         }
-        .rubros-wrapper::-webkit-scrollbar-track {
-            background: #e0e0e0;
-            border-radius: 4px;
-        }
-        @media (max-width: 768px) {
-            .header h1 { font-size: 1.2em; }
-            .header h1 small { font-size: 0.4em; }
-            .header-stats { font-size: 0.75em; padding: 5px 12px; }
-            .header-stats span:not(:first-child) { display: none; }
-            .rubros-section { padding: 15px; }
-            .rubro-btn { font-size: 0.75em; padding: 6px 14px; }
-            .empresas-grid { grid-template-columns: 1fr; gap: 15px; }
-            .empresa-card { padding: 15px; }
-            .empresa-card h3 { font-size: 1em; }
-            .section-header { flex-direction: column; align-items: flex-start; }
-            .container { padding: 0 10px; margin: 10px auto; }
-            .empresas-section { padding: 15px; }
-        }
-        @media (max-width: 480px) {
-            .header { padding: 12px 0; }
-            .header-content { padding: 0 12px; gap: 10px; }
-            .header h1 { font-size: 1em; }
-            .header h1 i { font-size: 1.2em; }
-            .search-box { padding: 6px 15px; }
-            .search-box input { font-size: 0.9em; padding: 8px 0; }
-            .rubro-btn { font-size: 0.7em; padding: 5px 12px; }
-            .empresa-card .info-item { font-size: 0.8em; }
-        }
+
+        /* ===== ANIMACIONES ===== */
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        .empresa-card { animation: fadeInUp 0.4s ease forwards; }
-        .loading { text-align: center; padding: 60px 20px; }
-        .loading i { font-size: 3em; color: #1565c0; animation: spin 1s linear infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (min-width: 600px) {
+            .empresas-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 992px) {
+            .empresas-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .header h1 {
+                font-size: 1.6em;
+            }
+
+            .container {
+                padding: 0 20px;
+                margin: 20px auto;
+            }
+
+            .rubros-section,
+            .empresas-section {
+                padding: 20px 24px;
+                border-radius: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1em;
+            }
+
+            .header h1 i {
+                font-size: 1.2em;
+            }
+
+            .header-stats {
+                font-size: 0.7em;
+                padding: 4px 10px;
+                gap: 8px;
+            }
+
+            .header-stats span:not(:first-child) {
+                display: none;
+            }
+
+            .search-box {
+                padding: 5px 12px;
+            }
+
+            .search-box input {
+                font-size: 0.85em;
+                padding: 6px 0;
+            }
+
+            .rubro-select-wrapper select {
+                padding: 10px 14px;
+                font-size: 0.85em;
+            }
+
+            .empresa-card {
+                padding: 14px;
+            }
+
+            .empresa-card h3 {
+                font-size: 0.95em;
+            }
+
+            .empresa-card .info-item {
+                font-size: 0.8em;
+            }
+
+            .theme-toggle {
+                width: 34px;
+                height: 34px;
+                font-size: 0.95em;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- HEADER -->
     <header class="header">
         <div class="header-content">
             <div class="header-top">
@@ -348,27 +594,37 @@
                     Directorio Empresarial
                     <small>Cámara de Comercio de La Libertad</small>
                 </h1>
-                <div class="header-stats">
-                    <span><i class="fas fa-tag"></i> <span id="totalRubros">0</span> rubros</span>
-                    <span><i class="fas fa-store"></i> <span id="totalEmpresas">0</span> empresas</span>
+                <div class="header-actions">
+                    <div class="header-stats">
+                        <span><i class="fas fa-tag"></i> <span id="totalRubros">0</span></span>
+                        <span><i class="fas fa-store"></i> <span id="totalEmpresas">0</span></span>
+                    </div>
+                    <button class="theme-toggle" id="themeToggle" title="Cambiar modo oscuro/claro">
+                        <i class="fas fa-moon"></i>
+                    </button>
                 </div>
             </div>
             <div class="search-box">
                 <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Buscar por nombre, rubro, dirección o contacto...">
-                <i class="fas fa-times-circle" id="clearSearch" style="cursor:pointer; opacity:0; transition:opacity 0.3s;"></i>
+                <input type="text" id="searchInput" placeholder="Buscar empresa, rubro o ubicación...">
+                <i class="fas fa-times-circle" id="clearSearch"></i>
             </div>
         </div>
     </header>
 
+    <!-- CONTENIDO -->
     <div class="container">
+        <!-- RUBROS (SELECT) -->
         <section class="rubros-section">
-            <h2><i class="fas fa-tags"></i> Rubros</h2>
-            <div class="rubros-wrapper">
-                <div class="rubros-grid" id="rubrosList"></div>
+            <h2><i class="fas fa-tags"></i> Seleccionar Rubro</h2>
+            <div class="rubro-select-wrapper">
+                <select id="rubroSelect">
+                    <option value="">Cargando rubros...</option>
+                </select>
             </div>
         </section>
 
+        <!-- EMPRESAS -->
         <section class="empresas-section">
             <div class="section-header">
                 <h2 id="sectionTitle"><i class="fas fa-store"></i> Empresas</h2>
@@ -377,27 +633,61 @@
             <div id="empresasContainer">
                 <div class="loading">
                     <i class="fas fa-spinner"></i>
-                    <p style="margin-top:15px; color:#999;">Cargando empresas...</p>
+                    <p style="margin-top:12px; color:var(--text-light);">Cargando empresas...</p>
                 </div>
             </div>
         </section>
     </div>
 
     <script>
+        // ============================================================
+        // DATOS
+        // ============================================================
         let empresasData = {};
         let rubroSeleccionado = null;
         let searchQuery = '';
 
+        // ============================================================
+        // MODO OSCURO
+        // ============================================================
+        const themeToggle = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme') || 'light';
+
+        if (currentTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
+        themeToggle.addEventListener('click', function() {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                this.innerHTML = '<i class="fas fa-moon"></i>';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                this.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+        });
+
+        // ============================================================
+        // CARGAR DATOS
+        // ============================================================
         async function cargarDatos() {
             try {
                 const response = await fetch('empresas.json');
                 if (!response.ok) throw new Error('No se pudo cargar el archivo JSON');
                 empresasData = await response.json();
+                
                 actualizarEstadisticas();
-                renderizarRubros();
+                llenarSelectRubros();
+                
                 const rubros = Object.keys(empresasData);
                 if (rubros.length > 0) {
-                    seleccionarRubro(rubros[0]);
+                    rubroSeleccionado = rubros[0];
+                    document.getElementById('rubroSelect').value = rubros[0];
+                    renderizarEmpresas();
                 }
             } catch (error) {
                 console.error('Error cargando datos:', error);
@@ -406,12 +696,15 @@
                         <i class="fas fa-exclamation-triangle" style="color:#f44336;"></i>
                         <h3>Error al cargar los datos</h3>
                         <p>Verifica que el archivo <strong>empresas.json</strong> esté en la misma carpeta.</p>
-                        <p style="font-size:0.85em; color:#999; margin-top:10px;">${error.message}</p>
+                        <p style="font-size:0.8em; color:var(--text-light); margin-top:8px;">${error.message}</p>
                     </div>
                 `;
             }
         }
 
+        // ============================================================
+        // ACTUALIZAR ESTADÍSTICAS
+        // ============================================================
         function actualizarEstadisticas() {
             const rubros = Object.keys(empresasData);
             const total = rubros.reduce((sum, r) => sum + empresasData[r].length, 0);
@@ -419,36 +712,43 @@
             document.getElementById('totalEmpresas').textContent = total;
         }
 
-        function renderizarRubros() {
-            const container = document.getElementById('rubrosList');
+        // ============================================================
+        // LLENAR SELECT DE RUBROS
+        // ============================================================
+        function llenarSelectRubros() {
+            const select = document.getElementById('rubroSelect');
             const rubros = Object.keys(empresasData);
+            
             if (rubros.length === 0) {
-                container.innerHTML = '<span style="color:#999;">No hay rubros disponibles</span>';
+                select.innerHTML = '<option value="">No hay rubros disponibles</option>';
                 return;
             }
-            container.innerHTML = rubros.map(rubro => `
-                <button class="rubro-btn" onclick="seleccionarRubro('${rubro.replace(/'/g, "\\'")}')" data-rubro="${rubro}">
-                    ${rubro}
-                    <span class="count">${empresasData[rubro].length}</span>
-                </button>
+
+            select.innerHTML = rubros.map(rubro => `
+                <option value="${rubro.replace(/"/g, '&quot;')}">
+                    ${rubro} (${empresasData[rubro].length})
+                </option>
             `).join('');
-        }
 
-        function seleccionarRubro(rubro) {
-            rubroSeleccionado = rubro;
-            searchQuery = document.getElementById('searchInput').value.trim();
-            document.querySelectorAll('.rubro-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.rubro === rubro);
+            select.addEventListener('change', function() {
+                rubroSeleccionado = this.value;
+                renderizarEmpresas();
             });
-            renderizarEmpresas();
         }
 
+        // ============================================================
+        // RENDERIZAR EMPRESAS
+        // ============================================================
         function renderizarEmpresas() {
             const container = document.getElementById('empresasContainer');
             let empresas = [];
+
             if (rubroSeleccionado && empresasData[rubroSeleccionado]) {
                 empresas = [...empresasData[rubroSeleccionado]];
             }
+
+            // Filtrar por búsqueda
+            searchQuery = document.getElementById('searchInput').value.trim();
             if (searchQuery) {
                 const query = searchQuery.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
                 empresas = empresas.filter(e => {
@@ -456,12 +756,15 @@
                     return texto.includes(query);
                 });
             }
+
+            // Actualizar contador
             document.getElementById('resultCount').textContent = `${empresas.length} resultados`;
             document.getElementById('sectionTitle').innerHTML = `
                 <i class="fas fa-store"></i> 
                 ${rubroSeleccionado || 'Empresas'}
-                ${searchQuery ? `<span style="font-weight:300;font-size:0.8em;color:#999;"> - Buscando: "${searchQuery}"</span>` : ''}
+                ${searchQuery ? `<span style="font-weight:300;font-size:0.8em;color:var(--text-light);"> - Buscando: "${searchQuery}"</span>` : ''}
             `;
+
             if (empresas.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
@@ -472,50 +775,59 @@
                 `;
                 return;
             }
+
             container.innerHTML = `
                 <div class="empresas-grid">
                     ${empresas.map((empresa, index) => `
-                        <div class="empresa-card" style="animation-delay:${index * 0.05}s">
+                        <div class="empresa-card" style="animation-delay:${Math.min(index * 0.03, 0.5)}s">
                             ${empresa.ruc ? `<span class="ruc-tag">RUC: ${empresa.ruc}</span>` : ''}
                             <h3><i class="fas fa-building"></i> ${empresa.nombre || 'Sin nombre'}</h3>
                             ${empresa.rubro ? `<span class="rubro-tag">${empresa.rubro}</span>` : ''}
+                            
                             ${empresa.descripcion ? `<div class="descripcion">${empresa.descripcion}</div>` : ''}
+                            
                             ${empresa.direccion ? `
                                 <div class="info-item">
                                     <i class="fas fa-map-marker-alt"></i>
                                     <span class="value">${empresa.direccion}</span>
                                 </div>
                             ` : ''}
+                            
                             ${empresa.contacto ? `
                                 <div class="info-item">
                                     <i class="fas fa-user"></i>
                                     <span class="value">${empresa.contacto}</span>
                                 </div>
                             ` : ''}
+                            
                             ${empresa.telefono ? `
                                 <div class="info-item">
                                     <i class="fas fa-phone"></i>
                                     <span class="value">${empresa.telefono}</span>
                                 </div>
                             ` : ''}
+                            
                             ${empresa.email ? `
                                 <div class="info-item">
                                     <i class="fas fa-envelope"></i>
                                     <span class="value"><a href="mailto:${empresa.email}">${empresa.email}</a></span>
                                 </div>
                             ` : ''}
+                            
                             ${empresa.web ? `
                                 <div class="info-item">
                                     <i class="fas fa-globe"></i>
                                     <span class="value"><a href="${empresa.web.startsWith('http') ? empresa.web : 'https://' + empresa.web}" target="_blank">${empresa.web}</a></span>
                                 </div>
                             ` : ''}
+                            
                             ${empresa.productos ? `
-                                <div class="info-item" style="margin-top:8px;">
+                                <div class="info-item" style="margin-top:6px;">
                                     <i class="fas fa-box"></i>
                                     <span class="value"><strong>Productos:</strong> ${empresa.productos}</span>
                                 </div>
                             ` : ''}
+                            
                             ${empresa.promocion ? `
                                 <div class="promocion">
                                     <i class="fas fa-gift"></i>
@@ -528,26 +840,27 @@
             `;
         }
 
-        document.getElementById('searchInput').addEventListener('input', function() {
-            const clearBtn = document.getElementById('clearSearch');
-            if (this.value.trim()) {
-                clearBtn.style.opacity = '1';
-            } else {
-                clearBtn.style.opacity = '0';
-            }
-            searchQuery = this.value.trim();
+        // ============================================================
+        // BÚSQUEDA EN TIEMPO REAL
+        // ============================================================
+        const searchInput = document.getElementById('searchInput');
+        const clearBtn = document.getElementById('clearSearch');
+
+        searchInput.addEventListener('input', function() {
+            clearBtn.classList.toggle('visible', this.value.trim().length > 0);
             renderizarEmpresas();
         });
 
-        document.getElementById('clearSearch').addEventListener('click', function() {
-            const input = document.getElementById('searchInput');
-            input.value = '';
-            this.style.opacity = '0';
-            searchQuery = '';
+        clearBtn.addEventListener('click', function() {
+            searchInput.value = '';
+            this.classList.remove('visible');
             renderizarEmpresas();
-            input.focus();
+            searchInput.focus();
         });
 
+        // ============================================================
+        // INICIAR
+        // ============================================================
         document.addEventListener('DOMContentLoaded', cargarDatos);
     </script>
 </body>
